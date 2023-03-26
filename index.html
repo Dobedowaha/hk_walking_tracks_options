@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Name of the app -->
+        <title>HK Walking Tracks Explorer</title>
+
+        <!-- Link to main style sheet -->
+        <link rel="stylesheet" href="style.css"> 
+    <body>
+        <script src="app.js"></script>
+
+        <h1>HK Walking Tracks Explorer</h1>
+
+        <p>Choose a district to show the list of tracks in the same district [Or select "All" for all HK tracks]:</p>
+            
+        <select id="District_en">
+            <option class = "district" value="Southern">Southern</option>
+            <option class = "district" value="Central and Western">Central and Western</option>
+            <option class = "district" value="Wan Chai">Wan Chai</option>
+            <option class = "district" value="Eastern">Eastern</option>
+            <option class = "district" value="Sham Shui Po">Sham Shui Po</option>
+            <option class = "district" value="Yau Tsim Mong">Yau Tsim Mong</option>
+            <option class = "district" value="Wong Tai Sin">Wong Tai Sin</option>
+            <option class = "district" value="Kwun Tong">Kwun Tong</option>
+            <option class = "district" value="Kowloon City">Kowloon City</option>
+            <option class = "district" value="Tai Po">Tai Po</option>
+            <option class = "district" value="Sai Kung">Sai Kung</option>
+            <option class = "district" value="Sha Tin Distict">Sha Tin Distict</option>
+            <option class = "district" value="Tuen Mun">Tuen Mun</option>
+            <option class = "district" value="Yuen Long">Yuen Long</option>
+            <option class = "district" value="North">North</option>
+            <option class = "district" value="Tsuen Wan">Tsuen Wan</option>
+            <option class = "district" value="Kwai Tsing">Kwai Tsing</option>
+            <option class = "district" value="Islands">Islands</option>
+            <option class = "district" value="All">All</option>
+        </select>
+        <br><br>
+        
+        <button onclick="showList()">Show List</button>
+
+        
+
+        <script>
+            function showList(){
+                fetch("tracks.json")
+                .then(response => response.json())
+                .then(data => createList(data));
+            }
+  
+            function createList(data) {
+                const mainUL = document.createElement('ol');
+                for (let i = 0; i < data.tracks.length; i++) {
+                    const trackLI = document.createElement('li');
+                    trackLI.innerHTML = data.tracks[i].Title_en;
+
+                    // create list for tc name
+                    const tcNameUL = document.createElement('ul');
+                    for (var key in data.tracks[i].Title_tc) {
+                        const tcNameLI = document.createElement('li');
+                        tcNameLI.innerHTML = key + ': ' + data.tracks[i].Title_tc[key];
+                        tcNameUL.appendChild(tcNameLI);
+                    }
+
+                    // append tcName list to trackLI
+                    trackLI.appendChild(tcNameUL);
+
+                    // create list for sc name
+                    const scNameUL = document.createElement('ul');
+                    for (var key in data.tracks[i].Title_sc) {
+                        const scNameLI = document.createElement('li');
+                        scNameLI.innerHTML = key + ': ' + data.tracks[i].Title_sc[key];
+                        scNameUL.appendChild(scNameLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(scNameUL);
+
+                    // create list for district en
+                    const disEngUL = document.createElement('ul');
+                    for (var key in data.tracks[i].District_en) {
+                        const disEngLI = document.createElement('li');
+                        disEngLI.innerHTML = key + ': ' + data.tracks[i].District_en[key];
+                        disEngUL.appendChild(disEngLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(disEngUL);
+
+                    // create list for district tc
+                    const disTcUL = document.createElement('ul');
+                    for (var key in data.tracks[i].District_tc) {
+                        const disTcLI = document.createElement('li');
+                        disTcLI.innerHTML = key + ': ' + data.tracks[i].District_tc[key];
+                        disTcUL.appendChild(disTcLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(disTcUL);
+
+                    // create list for district sc
+                    const disScUL = document.createElement('ul');
+                    for (var key in data.tracks[i].District_sc) {
+                        const disScLI = document.createElement('li');
+                        disScLI.innerHTML = key + ': ' + data.tracks[i].District_sc[key];
+                        disScUL.appendChild(disScLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(disScUL);
+
+                    // create list for route en
+                    const rouEngUL = document.createElement('ul');
+                    for (var key in data.tracks[i].Route_en) {
+                        const rouEngLI = document.createElement('li');
+                        rouEngLI.innerHTML = key + ': ' + data.tracks[i].Route_en[key];
+                        rouEngUL.appendChild(rouEngLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(rouEngUL);
+
+                    // create list for route tc
+                    const rouTcUL = document.createElement('ul');
+                    for (var key in data.tracks[i].Route_tc) {
+                        const rouTcLI = document.createElement('li');
+                        rouTcLI.innerHTML = key + ': ' + data.tracks[i].Route_tc[key];
+                        rouTcUL.appendChild(rouTcLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(rouTcUL);
+
+                    // create list for how to access en
+                    const accEngUL = document.createElement('ul');
+                    for (var key in data.tracks[i].HowToAccess_en) {
+                        const accEngLI = document.createElement('li');
+                        accEngLI.innerHTML = key + ': ' + data.tracks[i].HowToAccess_en[key];
+                        accEngUL.appendChild(accEngLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(accEngUL);
+
+                    // create list for how to access tc
+                    const accTcUL = document.createElement('ul');
+                    for (var key in data.tracks[i].HowToAccess_tc) {
+                        const accTcLI = document.createElement('li');
+                        accTcLI.innerHTML = key + ': ' + data.tracks[i].HowToAccess_tc[key];
+                        accTcUL.appendChild(accTcLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(accTcUL);
+
+                    // create list for how to access sc
+                    const accScUL = document.createElement('ul');
+                    for (var key in data.tracks[i].HowToAccess_sc) {
+                        const accScLI = document.createElement('li');
+                        accScLI.innerHTML = key + ': ' + data.tracks[i].HowToAccess_sc[key];
+                        accScUL.appendChild(accScLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(accScUL);
+
+                    // create list for map eng
+                    const mapEnUL = document.createElement('ul');
+                    for (var key in data.tracks[i].MapURL_en) {
+                        const mapEnLI = document.createElement('li');
+                        mapEnLI.innerHTML = key + ': ' + data.tracks[i].MapURL_en[key];
+                        mapEnUL.appendChild(mapEnLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(mapEnUL);
+
+                    // create list for map tc
+                    const mapTcUL = document.createElement('ul');
+                    for (var key in data.tracks[i].MapURL_tc) {
+                        const mapTcLI = document.createElement('li');
+                        mapTcLI.innerHTML = key + ': ' + data.tracks[i].MapURL_tc[key];
+                        mapTcUL.appendChild(mapTcLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(mapTcUL);
+
+                    // create list for map sc
+                    const mapScUL = document.createElement('ul');
+                    for (var key in data.tracks[i].MapURL_sc) {
+                        const mapScLI = document.createElement('li');
+                        mapScLI.innerHTML = key + ': ' + data.tracks[i].MapURL_sc[key];
+                        mapScUL.appendChild(mapScLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(mapScUL);
+
+                    // create list for latitude
+                    const latUL = document.createElement('ul');
+                    for (var key in data.tracks[i].Latitude) {
+                        const latLI = document.createElement('li');
+                        latLI.innerHTML = key + ': ' + data.tracks[i].Latitude[key];
+                        latUL.appendChild(latLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(latUL);
+
+                    // create list for longitude
+                    const longUL = document.createElement('ul');
+                    for (var key in data.tracks[i].Longitude) {
+                        const longLI = document.createElement('li');
+                        longLI.innerHTML = key + ': ' + data.tracks[i].Longitude[key];
+                        longUL.appendChild(longLI);
+                    }
+
+                    // append marks list to studentLI
+                    trackLI.appendChild(longUL);
+
+
+                    // append track list to mainUL
+                    mainUL.appendChild(trackLI);
+                }
+                // append mainUL to body
+                document.body.appendChild(mainUL);
+            }
+        </script>
+        
+        
+    </body>
+</html>
+
+
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
